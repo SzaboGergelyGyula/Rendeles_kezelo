@@ -1,12 +1,13 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { createUser, getAllUsers, updateUser, deleteUser } from './apis/userApi'
 
 // Custom APIs for renderer
-const api = {
-  getProfileInfo: async (args) => {
-    const result = await ipcRenderer.invoke('get-user', args)
-    return result
-  }
+const userApi = {
+  createUser,
+  getAllUsers,
+  updateUser,
+  deleteUser
   // node: () => process.versions.node
   // ping: () => ipcRenderer.invoke('ping')
 }
@@ -17,7 +18,7 @@ const api = {
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('userApi', userApi)
   } catch (error) {
     console.error(error)
   }

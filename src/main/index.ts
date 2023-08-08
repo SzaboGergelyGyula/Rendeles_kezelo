@@ -1,7 +1,21 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { Database } from 'sqlite3'
+import './handlers/userHandlers'
+
+const dbFilePath = join(app.getPath('userData'), 'mydatabase.db')
+
+export const db = new Database(dbFilePath)
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    email TEXT
+  )
+`)
 
 function createWindow(): void {
   // Create the browser window.
@@ -15,11 +29,6 @@ function createWindow(): void {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
-  })
-
-  ipcMain.handle('get-user', (event, args) => {
-    const username = 'exampleUsername'
-    return username
   })
 
   mainWindow.on('ready-to-show', () => {
