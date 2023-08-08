@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import { Database } from 'sqlite3'
 import './handlers/userHandlers'
 
-const dbFilePath = join(app.getPath('userData'), 'mydatabase.db')
+const dbFilePath = join(app.getPath('userData'), 'vendeglatas.db')
 
 export const db = new Database(dbFilePath)
 

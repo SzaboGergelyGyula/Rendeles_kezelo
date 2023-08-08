@@ -1,9 +1,9 @@
 {
-  "name": "react-ts-test",
+  "name": "vandeglatas",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "description": "NTAK  nélküli szoftver",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "Geri",
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "format": "prettier --write .",
