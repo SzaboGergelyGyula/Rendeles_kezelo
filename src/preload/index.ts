@@ -1,13 +1,15 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { createTable, getAllTables, updateTable, deleteTable } from './apis/tableApi'
+import { createUser, getAllUsers, updateUser, deleteUser } from './apis/userApi'
 
 // Custom APIs for renderer
-const tableApi = {
-  createTable,
-  getAllTables,
-  updateTable,
-  deleteTable
+const userApi = {
+  createUser,
+  getAllUsers,
+  updateUser,
+  deleteUser
+  // node: () => process.versions.node
+  // ping: () => ipcRenderer.invoke('ping')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -16,7 +18,7 @@ const tableApi = {
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('tableApi', tableApi)
+    contextBridge.exposeInMainWorld('userApi', userApi)
   } catch (error) {
     console.error(error)
   }
@@ -24,5 +26,5 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.electron = electronAPI
   // @ts-ignore (define in dts)
-  window.tableApi = tableApi
+  window.api = api
 }
