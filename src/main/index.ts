@@ -3,18 +3,48 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { Database } from 'sqlite3'
-import './handlers/userHandlers'
+
+import './handlers/tableHandlers'
 
 const dbFilePath = join(app.getPath('userData'), 'mydatabase.db')
 
 export const db = new Database(dbFilePath)
 
 db.run(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    email TEXT
-  )
+  CREATE TABLE IF NOT EXISTS tables (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS order (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    table_id INTEGER NOT NULL,
+    discount INTEGER CHECK (discount >= 0 AND discount <= 100),
+    payed DATE,
+    FOREIGN KEY (table_id) REFERENCES tables(id)
+  );
+
+  CREATE TABLE IF NOT EXISTS resource (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    price INTEGER NOT NULL,
+    amount INTEGER
+  );
+
+  CREATE TABLE IF NOT EXISTS order-resource (
+    order_id INTEGER NOT NULL,
+    resource_id INTEGER NOT NULL,
+    amount INTEGER,
+    FOREIGN KEY (order_id) REFERENCES order(id),
+    FOREIGN KEY (resource_id) REFERENCES resource(id)
+  );
+
+  CREATE TABLE IF NOT EXISTS days (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    open DATE NOT NULL,
+    close DATE,
+    summary INTEGER
+  );
 `)
 
 function createWindow(): void {
