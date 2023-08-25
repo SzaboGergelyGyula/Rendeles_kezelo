@@ -2,6 +2,7 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 
 import { ITable } from './interfaces/table'
 import { IOrder } from '@renderer/App'
+import { IResource } from './interfaces/resource'
 
 declare global {
   interface Window {
@@ -22,6 +23,17 @@ declare global {
       ) => Promise<void>
       deleteOrder: (id: number) => Promise<void>
       getAllOrders: () => Promise<{ success: boolean; orders: IOrder[] }>
+    }
+    resourceApi: {
+      createResource: (name: string, price: number, amount?: number) => Promise<void>
+      updateResource: (
+        id: number,
+        newName: string,
+        newPrice: number,
+        newAmount?: number
+      ) => Promise<void>
+      deleteResource: (id: number) => Promise<void>
+      getAllResources: () => Promise<{ success: boolean; resources: IResource[] }>
     }
   }
 }
