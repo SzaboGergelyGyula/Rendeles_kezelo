@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import TablesComponent from './components/TablesComponent'
 import OrderComponent from './components/OrderComponent'
+import ResourceComponent from './components/ResourceComponent'
 
 export interface ITable {
   id: number
@@ -14,9 +15,17 @@ export interface IOrder {
   payed: Date
 }
 
+export interface IResource {
+  id: number
+  name: string
+  price: number
+  amount?: number
+}
+
 function App(): JSX.Element {
   const [tables, setTables] = useState<ITable[]>([])
   const [orders, setOrders] = useState<IOrder[]>([])
+  const [resources, setResources] = useState<IResource[]>([])
 
   const fetchTables = async (): Promise<void> => {
     const response = await window.tableApi.getAllTables()
@@ -32,9 +41,17 @@ function App(): JSX.Element {
     }
   }
 
+  const fetchResources =async (): Promise<void> => {
+    const response = await window.resourceApi.getAllResources()
+    if (response.success) {
+      setResources(response.resources)
+    }
+  }
+
   useEffect(() => {
     fetchTables()
     fetchOrders()
+    fetchResources()
   }, [])
 
   return (
@@ -44,6 +61,7 @@ function App(): JSX.Element {
       </h1>
       <TablesComponent fetchTables={fetchTables} tables={tables} />
       <OrderComponent fetchOrders={fetchOrders} orders={orders} tables={tables} />
+      <ResourceComponent fetchResources={fetchResources} resources={resources}/>
     </>
   )
 }
