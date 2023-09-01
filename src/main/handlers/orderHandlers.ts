@@ -41,7 +41,6 @@ ipcMain.handle('get-all-orders', (event) => {
 
 ipcMain.handle('update-order', async (event, args: IUpdateOrderArgs) => {
   const { id, newTableId, newDiscount, newPayed } = args
-  console.log(id, newTableId, newDiscount, newPayed)
   const sql = `UPDATE orders SET table_id = ?, discount_value = ?, payed = ? WHERE id = ?`
   const values = [newTableId, newDiscount || null, newPayed || null, id]
 

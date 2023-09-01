@@ -3,6 +3,12 @@ import { electronAPI } from '@electron-toolkit/preload'
 import { createTable, getAllTables, updateTable, deleteTable } from './apis/tableApi'
 import { createOrder, getAllOrders, updateOrder, deleteOrder } from './apis/orderApi'
 import { createResource, deleteResource, getAllResources, updateResource } from './apis/resourceApi'
+import {
+  createOrderResource,
+  updateOrderResource,
+  deleteOrderResource,
+  getAllOrderResources
+} from './apis/orderResourceApi'
 
 // Custom APIs for renderer
 const tableApi = {
@@ -26,6 +32,13 @@ const resourceApi = {
   deleteResource
 }
 
+const orderResourceApi = {
+  createOrderResource,
+  updateOrderResource,
+  deleteOrderResource,
+  getAllOrderResources
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -35,6 +48,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('tableApi', tableApi)
     contextBridge.exposeInMainWorld('orderApi', orderApi)
     contextBridge.exposeInMainWorld('resourceApi', resourceApi)
+    contextBridge.exposeInMainWorld('orderResourceApi', orderResourceApi)
   } catch (error) {
     console.error('error: ' + error)
   }
@@ -47,4 +61,6 @@ if (process.contextIsolated) {
   window.orderApi = orderApi
   // @ts-ignore (define in dts)
   window.resourceApi = resourceApi
+  // @ts-ignore (define in dts)
+  window.orderResourceApi = orderResourceApi
 }

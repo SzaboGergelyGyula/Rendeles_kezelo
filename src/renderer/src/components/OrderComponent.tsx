@@ -23,7 +23,6 @@ const OrderComponent = ({ fetchOrders, orders, tables }: OrderComponentProps): J
     newDiscountValue: number,
     newPayed: Date
   ) => {
-    console.log(id, newTableId,  newPayed)
     await window.orderApi.updateOrder(id, newTableId, newDiscountValue, newPayed)
     fetchOrders()
   }

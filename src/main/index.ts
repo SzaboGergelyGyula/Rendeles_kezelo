@@ -7,6 +7,7 @@ import { Database } from 'sqlite3'
 import './handlers/tableHandlers'
 import './handlers/orderHandlers'
 import './handlers/resourceHandlers'
+import './handlers/orderResourceHandlers'
 
 const dbFilePath = join(app.getPath('userData'), 'jodb.db')
 

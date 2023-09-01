@@ -3,6 +3,7 @@ import { ElectronAPI } from '@electron-toolkit/preload'
 import { ITable } from './interfaces/table'
 import { IOrder } from '@renderer/App'
 import { IResource } from './interfaces/resource'
+import { IOrderResource } from './interfaces/orderResource'
 
 declare global {
   interface Window {
@@ -34,6 +35,12 @@ declare global {
       ) => Promise<void>
       deleteResource: (id: number) => Promise<void>
       getAllResources: () => Promise<{ success: boolean; resources: IResource[] }>
+    }
+    orderResourceApi: {
+      createOrderResource: (order_id: number, resource_id: number, amount?: number) => Promise<void>
+      updateOrderResource: (order_id: number, resource_id: number, amount?: number) => Promise<void>
+      deleteOrderResource: (order_id: number, resource_id: number) => Promise<void>
+      getAllOrderResources: () => Promise<{ success: boolean; orderResources: IOrderResource[] }>
     }
   }
 }

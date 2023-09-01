@@ -46,7 +46,7 @@ const ResourceComponent = ({ fetchResources, resources }: ResourceComponentProps
         <input
           type="number"
           placeholder="Price"
-          value={price}
+          value={price ? price : 0}
           onChange={(e: ChangeEvent<HTMLInputElement>): void => setPrice(parseInt(e.target.value))}
         />
         <button onClick={createResource}>Create</button>
@@ -61,7 +61,9 @@ const ResourceComponent = ({ fetchResources, resources }: ResourceComponentProps
               <button onClick={(): Promise<void> => updateResource(resource.id, resource.name, resource.price, 3)} >
                 Update
               </button>
-              <button onClick={(): Promise<void> => deleteResource(resource.id)}>Delete</button>
+              <button onClick={(): Promise<void> => deleteResource(resource.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>
