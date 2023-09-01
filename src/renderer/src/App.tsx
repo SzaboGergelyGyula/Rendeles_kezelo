@@ -3,6 +3,7 @@ import TablesComponent from './components/TablesComponent'
 import OrderComponent from './components/OrderComponent'
 import ResourceComponent from './components/ResourceComponent'
 import OrderResourceComponent from './components/OrderResourceComponent'
+import DayComponent from './components/DayComponent'
 
 export interface ITable {
   id: number
@@ -29,11 +30,19 @@ export interface IOrderResource {
   amount?: number
 }
 
+export interface IDay {
+  id: number
+  open: Date
+  close?: Date
+  summary?: number
+}
+
 function App(): JSX.Element {
   const [tables, setTables] = useState<ITable[]>([])
   const [orders, setOrders] = useState<IOrder[]>([])
   const [resources, setResources] = useState<IResource[]>([])
   const [orderResources, setOrderResources] = useState<IOrderResource[]>([])
+  const [days, setDays] = useState<IDay[]>([])
 
   const fetchTables = async (): Promise<void> => {
     const response = await window.tableApi.getAllTables()
@@ -58,9 +67,15 @@ function App(): JSX.Element {
 
   const fetchOrderResources =async (): Promise<void> => {
     const response = await window.orderResourceApi.getAllOrderResources()
-    console.log(response)
     if (response.success) {
       setOrderResources(response.orderResources)
+    }
+  }
+
+  const fetchDays = async (): Promise<void> => {
+    const response = await window.dayApi.getAllDays()
+    if (response.success) {
+      setDays(response.days)
     }
   }
 
@@ -69,6 +84,7 @@ function App(): JSX.Element {
     fetchOrders()
     fetchResources()
     fetchOrderResources()
+    fetchDays()
   }, [])
 
   return (
@@ -84,6 +100,7 @@ function App(): JSX.Element {
         orderResources={orderResources}
         orders={orders}
         resources={resources} />
+      <DayComponent fetchDays={fetchDays} days={days} />
     </>
   )
 }

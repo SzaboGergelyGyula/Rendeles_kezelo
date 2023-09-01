@@ -8,6 +8,7 @@ import './handlers/tableHandlers'
 import './handlers/orderHandlers'
 import './handlers/resourceHandlers'
 import './handlers/orderResourceHandlers'
+import './handlers/dayHandlers'
 
 const dbFilePath = join(app.getPath('userData'), 'jodb.db')
 
