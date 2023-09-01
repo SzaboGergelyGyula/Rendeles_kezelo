@@ -50,7 +50,6 @@ ipcMain.handle('update-order-resource', (event, args: IUpdateOrderResourceArgs) 
         console.log(err)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })

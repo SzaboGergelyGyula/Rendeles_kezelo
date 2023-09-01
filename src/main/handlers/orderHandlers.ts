@@ -17,7 +17,6 @@ ipcMain.handle('create-order', (event, args: ICreateOrderArgs) => {
         console.log(err.message)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })
@@ -50,7 +49,6 @@ ipcMain.handle('update-order', async (event, args: IUpdateOrderArgs) => {
         console.log(err)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })

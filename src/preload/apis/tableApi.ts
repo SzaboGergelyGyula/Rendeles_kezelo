@@ -12,7 +12,6 @@ export const getAllTables = async (): Promise<ITablesResponse> => {
   return response
 }
 export const updateTable = async (id: number, newName: string): Promise<ITableResponse> => {
-  console.log(id)
   return ipcRenderer.invoke('update-table', { id, newName })
 }
 export const deleteTable = async (tableId: number): Promise<ITableResponse> => {

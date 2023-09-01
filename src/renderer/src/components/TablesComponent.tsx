@@ -10,14 +10,12 @@ const TablesComponent = ({ fetchTables, tables }: TablesComponentProps): JSX.Ele
   const [tableName, setTableName] = useState('')
 
   const createTable = async (): Promise<void> => {
-    console.log(typeof tableName)
     await window.tableApi.createTable(tableName)
     setTableName('')
     fetchTables()
   }
 
   const updateTable = async (id: number, newName: string): Promise<void> => {
-    // console.log(id)
     await window.tableApi.updateTable(id, newName)
     fetchTables()
   }

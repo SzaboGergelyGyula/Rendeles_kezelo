@@ -11,7 +11,6 @@ const OrderComponent = ({ fetchOrders, orders, tables }: OrderComponentProps): J
   const [tableId, setTableId] = useState<number>()
 
   const createOrder = async (): Promise<void> => {
-    console.log(tableId)
     if (tableId) await window.orderApi.createOrder(tableId)
     setTableId(undefined)
     fetchOrders()

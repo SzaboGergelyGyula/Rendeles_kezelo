@@ -21,14 +21,12 @@ export const updateOrder = async (
   newDiscount?: number,
   newPayed?: Date
 ): Promise<IOrderResponse> => {
-  console.log()
   const response = await ipcRenderer.invoke('update-order', {
     id,
     newTableId,
     newDiscount,
     newPayed
   })
-  console.log(response)
   return response
 }
 

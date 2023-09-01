@@ -13,7 +13,6 @@ ipcMain.handle('create-day', (event, args: ICreateDayArgs) => {
         console.log(err.message)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })
@@ -46,7 +45,6 @@ ipcMain.handle('update-day', async (event, args: IUpdateDayArgs) => {
         console.log(err)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })

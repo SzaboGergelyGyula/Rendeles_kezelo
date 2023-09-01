@@ -17,7 +17,6 @@ ipcMain.handle('create-resource', (event, args: ICreateResourceArgs) => {
         console.log(err.message)
         resolve({ success: false, error: err.message })
       } else {
-        console.log('success')
         resolve({ success: true })
       }
     })

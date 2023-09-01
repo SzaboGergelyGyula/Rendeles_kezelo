@@ -36,8 +36,6 @@ const OrderResourceComponent = ({fetchOrderResources, orderResources, orders, re
     fetchOrderResources()
   }
 
-  console.log(orderResources)
-
   return (
     <div>
       <h1>Order-Resource Management</h1>
