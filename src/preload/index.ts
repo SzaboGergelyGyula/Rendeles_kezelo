@@ -9,6 +9,7 @@ import {
   deleteOrderResource,
   getAllOrderResources
 } from './apis/orderResourceApi'
+import { createDay, updateDay, deleteDay, getAllDays } from './apis/dayApi'
 
 // Custom APIs for renderer
 const tableApi = {
@@ -39,6 +40,13 @@ const orderResourceApi = {
   getAllOrderResources
 }
 
+const dayApi = {
+  createDay,
+  updateDay,
+  deleteDay,
+  getAllDays
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -49,6 +57,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('orderApi', orderApi)
     contextBridge.exposeInMainWorld('resourceApi', resourceApi)
     contextBridge.exposeInMainWorld('orderResourceApi', orderResourceApi)
+    contextBridge.exposeInMainWorld('dayApi', dayApi)
   } catch (error) {
     console.error('error: ' + error)
   }
@@ -63,4 +72,6 @@ if (process.contextIsolated) {
   window.resourceApi = resourceApi
   // @ts-ignore (define in dts)
   window.orderResourceApi = orderResourceApi
+  // @ts-ignore (define in dts)
+  window.dayApi = dayApi
 }

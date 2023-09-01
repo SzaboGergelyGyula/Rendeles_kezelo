@@ -4,6 +4,7 @@ import { ITable } from './interfaces/table'
 import { IOrder } from '@renderer/App'
 import { IResource } from './interfaces/resource'
 import { IOrderResource } from './interfaces/orderResource'
+import { IDay } from './interfaces/day'
 
 declare global {
   interface Window {
@@ -41,6 +42,12 @@ declare global {
       updateOrderResource: (order_id: number, resource_id: number, amount?: number) => Promise<void>
       deleteOrderResource: (order_id: number, resource_id: number) => Promise<void>
       getAllOrderResources: () => Promise<{ success: boolean; orderResources: IOrderResource[] }>
+    }
+    dayApi: {
+      createDay: (open: Date, close?: Date, summary?: number) => Promise<void>
+      updateDay: (id: number, open: Date, close?: Date, summary?: number) => Promise<void>
+      deleteDay: (id: number) => Promise<void>
+      getAllDays: () => Promise<{ success: boolean; days: IDay[] }>
     }
   }
 }
