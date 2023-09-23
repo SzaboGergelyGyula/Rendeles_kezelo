@@ -1,12 +1,13 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react"
 import { IResource } from "../App"
 
 interface ResourceComponentProps {
   fetchResources: () => void
   resources: IResource[]
+  setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-const ResourceComponent = ({ fetchResources, resources }: ResourceComponentProps): JSX.Element => {
+const ResourceComponent = ({ fetchResources, resources, setPageNumber }: ResourceComponentProps): JSX.Element => {
   const [name, setName] = useState<string>("")
   const [price, setPrice] = useState<number>()
 
@@ -34,6 +35,9 @@ const ResourceComponent = ({ fetchResources, resources }: ResourceComponentProps
 
   return (
     <>
+      <div>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-5" onClick={() => setPageNumber(0)}>Vissza</button>
+      </div>
       <h1>Resource Management</h1>
       <div>
         <h2>Create Resource</h2>
