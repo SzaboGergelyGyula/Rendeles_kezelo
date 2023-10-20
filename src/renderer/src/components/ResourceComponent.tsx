@@ -1,15 +1,15 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react"
-import { IResource } from "../App"
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from "react"
+import { GlobalContext, GlobalContextType } from "./context/GlobalContext"
 
 interface ResourceComponentProps {
-  fetchResources: () => void
-  resources: IResource[]
   setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-const ResourceComponent = ({ fetchResources, resources, setPageNumber }: ResourceComponentProps): JSX.Element => {
+const ResourceComponent = ({ setPageNumber }: ResourceComponentProps): JSX.Element => {
   const [name, setName] = useState<string>("")
   const [price, setPrice] = useState<number>()
+
+  const {resources, fetchResources} = useContext(GlobalContext) as GlobalContextType
 
   const createResource =async (): Promise<void> => {
     if (price) await window.resourceApi.createResource(name, price)

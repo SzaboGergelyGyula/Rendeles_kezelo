@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import TablesComponent from './components/TablesComponent'
 import OrderComponent from './components/OrderComponent'
 import ResourceComponent from './components/ResourceComponent'
@@ -6,6 +6,7 @@ import OrderResourceComponent from './components/OrderResourceComponent'
 import DayComponent from './components/DayComponent'
 import MainScreen from './components/MainScreen'
 import OrderingPage from './components/OrderingPage'
+import { GlobalContext, GlobalContextType } from './components/context/GlobalContext'
 
 export interface ITable {
   id: number
@@ -40,57 +41,70 @@ export interface IDay {
 }
 
 function App(): JSX.Element {
-  const [tables, setTables] = useState<ITable[]>([])
-  const [orders, setOrders] = useState<IOrder[]>([])
-  const [resources, setResources] = useState<IResource[]>([])
-  const [orderResources, setOrderResources] = useState<IOrderResource[]>([])
-  const [days, setDays] = useState<IDay[]>([])
+  // const [tables, setTables] = useState<ITable[]>([])
+  // const [orders, setOrders] = useState<IOrder[]>([])
+  // const [resources, setResources] = useState<IResource[]>([])
+  // const [orderResources, setOrderResources] = useState<IOrderResource[]>([])
+  // const [days, setDays] = useState<IDay[]>([])
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [tableId, setTableId] = useState<number>()
   const [orderId, setOrderId] = useState<number>()
 
-  const fetchTables = async (): Promise<void> => {
-    const response = await window.tableApi.getAllTables()
-    if (response.success) {
-      setTables(response.tables)
-    }
-  }
 
-  const fetchOrders = async (): Promise<void> => {
-    const response = await window.orderApi.getAllOrders()
-    if (response.success) {
-      setOrders(response.orders)
-    }
-  }
+  const {
+    tables,
+    orders,
+    resources,
+    orderResources,
+    days,
+    fetchTables,
+    fetchOrders,
+    fetchResources,
+    fetchOrderResources
+  } = useContext(GlobalContext) as GlobalContextType
 
-  const fetchResources = async (): Promise<void> => {
-    const response = await window.resourceApi.getAllResources()
-    if (response.success) {
-      setResources(response.resources)
-    }
-  }
+  // const fetchTables = async (): Promise<void> => {
+  //   const response = await window.tableApi.getAllTables()
+  //   if (response.success) {
+  //     setTables(response.tables)
+  //   }
+  // }
 
-  const fetchOrderResources =async (): Promise<void> => {
-    const response = await window.orderResourceApi.getAllOrderResources()
-    if (response.success) {
-      setOrderResources(response.orderResources)
-    }
-  }
+  // const fetchOrders = async (): Promise<void> => {
+  //   const response = await window.orderApi.getAllOrders()
+  //   if (response.success) {
+  //     setOrders(response.orders)
+  //   }
+  // }
 
-  const fetchDays = async (): Promise<void> => {
-    const response = await window.dayApi.getAllDays()
-    if (response.success) {
-      setDays(response.days)
-    }
-  }
+  // const fetchResources = async (): Promise<void> => {
+  //   const response = await window.resourceApi.getAllResources()
+  //   if (response.success) {
+  //     setResources(response.resources)
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchTables()
-    fetchOrders()
-    fetchResources()
-    fetchOrderResources()
-    fetchDays()
-  }, [])
+  // const fetchOrderResources =async (): Promise<void> => {
+  //   const response = await window.orderResourceApi.getAllOrderResources()
+  //   if (response.success) {
+  //     setOrderResources(response.orderResources)
+  //   }
+  // }
+
+  // const fetchDays = async (): Promise<void> => {
+  //   const response = await window.dayApi.getAllDays()
+  //   if (response.success) {
+  //     setDays(response.days)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchTables()
+  //   fetchOrders()
+  //   fetchResources()
+  //   fetchOrderResources()
+  //   fetchDays()
+  // }, [])
 
   useEffect(() => {
     findOrder()
@@ -106,45 +120,37 @@ function App(): JSX.Element {
     }
   }
 
+  console.log("render")
+
   if (pageNumber === 1) {
     return (
       <OrderingPage
         setPageNumber={setPageNumber}
-        resources={resources}
-        tables={tables}
         tableId={tableId}
-        orders={orders}
-        fetchOrders={fetchOrders}
-        orderResources={orderResources}
         orderId={orderId}
         setOrderId={setOrderId}
-        fetchOrderResources={fetchOrderResources}
         setTableId={setTableId}
       />
     )
   }
   if (pageNumber === 2) {
     return (
-      <ResourceComponent fetchResources={fetchResources} resources={resources} setPageNumber={setPageNumber} />
+      <ResourceComponent setPageNumber={setPageNumber} />
     )
   }
   if (pageNumber === 3) {
     return (
-      <TablesComponent fetchTables={fetchTables} tables={tables} setPageNumber={setPageNumber}/>
+      <TablesComponent setPageNumber={setPageNumber}/>
     )
   }
   else {
     return (
       <>
         <MainScreen
-          tables={tables}
           setPageNumber={setPageNumber}
           setTableId={setTableId}
           tableId={tableId}
-          orderResources={orderResources}
-          resources={resources}
           orderId={orderId}
-          orders={orders}
           setOrderId={setOrderId}
         />
         {/* <h1 className="text-3xl font-bold underline">

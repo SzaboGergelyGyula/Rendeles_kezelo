@@ -1,22 +1,25 @@
-import { IOrder, IOrderResource, IResource, ITable } from "../App"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction, useContext, useEffect } from "react"
 import ListComponent from "./ListComponent"
+import { GlobalContext, GlobalContextType } from "./context/GlobalContext"
 
 interface OrderingPageProps {
   setPageNumber: Dispatch<SetStateAction<number>>
-  resources: IResource[]
-  tables: ITable[]
-  orders: IOrder[]
   tableId: number | undefined
-  fetchOrders: () => void
-  orderResources: IOrderResource[]
   orderId: number | undefined
   setOrderId: Dispatch<SetStateAction<number | undefined>>
-  fetchOrderResources: () => void
   setTableId: Dispatch<SetStateAction<number | undefined>>
 }
 
-const OrderingPage = ({ setPageNumber, resources, tables, tableId, orders, fetchOrders, orderResources, orderId, setOrderId, fetchOrderResources, setTableId }: OrderingPageProps) => {
+const OrderingPage = ({ setPageNumber, tableId, orderId, setOrderId, setTableId }: OrderingPageProps) => {
+  const {
+    resources,
+    tables,
+    orders,
+    orderResources,
+    fetchOrders,
+    fetchOrderResources
+  } = useContext(GlobalContext) as GlobalContextType
+
   useEffect(() => {
     if (!orders.find(order => order.table_id === tableId)) {
       if (tableId) {

@@ -1,14 +1,14 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
-import { ITable } from '../App'
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react'
+import { GlobalContext, GlobalContextType } from './context/GlobalContext'
 
 interface TablesComponentProps {
-  fetchTables: () => void
-  tables: ITable[]
   setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-const TablesComponent = ({ fetchTables, tables, setPageNumber }: TablesComponentProps): JSX.Element => {
+const TablesComponent = ({ setPageNumber }: TablesComponentProps): JSX.Element => {
   const [tableName, setTableName] = useState('')
+
+  const { tables, fetchTables} = useContext(GlobalContext) as GlobalContextType
 
   const createTable = async (): Promise<void> => {
     await window.tableApi.createTable(tableName)

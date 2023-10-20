@@ -1,20 +1,19 @@
-import { Dispatch, SetStateAction } from "react"
-import { IOrder, IOrderResource, IResource, ITable } from "../App"
+import { Dispatch, SetStateAction, useContext } from "react"
 import ListComponent from "./ListComponent"
+import { GlobalContext, GlobalContextType } from "./context/GlobalContext"
 
 interface MainScreenProps {
-  tables: ITable[]
   setPageNumber: Dispatch<SetStateAction<number>>
   setTableId: Dispatch<SetStateAction<number | undefined>>
   tableId: number | undefined
-  orderResources: IOrderResource[]
-  resources: IResource[]
   orderId: number | undefined
-  orders: IOrder[]
   setOrderId: Dispatch<SetStateAction<number | undefined>>
 }
 
-const MainScreen = ({ tables, setPageNumber, setTableId, tableId, orderResources, resources, orderId, orders, setOrderId }: MainScreenProps) => {
+const MainScreen = ({ setPageNumber, setTableId, tableId, orderId }: MainScreenProps) => {
+  const {tables, orderResources, resources} = useContext(GlobalContext) as GlobalContextType
+
+
   return (
     <div className="w-full">
       <div className="flex">
